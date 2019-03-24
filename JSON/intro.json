@@ -1,0 +1,12 @@
+{
+    "name": "AR Khamaru",
+    "email": "ar.khamaru@gmail.com",
+    "links": [
+        {"facebook": "https://fb.com/a.razzak660"},
+        {"twitter": "https://twitter.com/a.razzak660"},
+        {"youtube": "https://youtube.com/selftics"}
+    ],
+    "skills": ["System Administration", "Networking", "python", "JavaScript", "NodeJS", "ML"],
+    "age": 28,
+    "IsMaried": false
+} 
