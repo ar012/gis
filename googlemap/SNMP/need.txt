@@ -1,0 +1,20 @@
+<div id="print_this_div">
+		
+			<c:forEach var="list" items="${map.deviceStatusList}">
+				<p>${list}</p>
+			</c:forEach>
+		
+		</div>
+
+
+
+<script type="text/javascript">
+function printDiv(el) {
+	
+    $('#print_this_div').printThis({
+        importCSS : true,
+        importStyle : true,
+        loadCSS : [ "" ]
+    });
+}
+</script>

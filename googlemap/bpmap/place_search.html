@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Places Search Box</title>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      #infowindow-content .title {
+        font-weight: bold;
+      }
+
+      #infowindow-content {
+        display: none;
+      }
+
+      #map #infowindow-content {
+        display: inline;
+      }
+
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+/* 
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      } */
+
+      /* #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 5 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      } */
+
+      #pac-input {
+        background-color: #fff;
+        
+        padding:1px 5px;
+        text-overflow: ellipsis;
+        width: 300px;
+        height: 25px
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      #target {
+        width: 345px;
+      }
+    </style>
+</head>
+
+<body>
+  <div>
+    <!-- <p>Place: <input id="pac-input" class="controls" type="text" placeholder="Search Place"></p> -->
+
+    <input id="pac-input" class="controls" type="text" placeholder="Search Place">
+  </div>
+
+  <div id="map"></div>
+  <script>
+    // This example adds a search box to a map, using the Google Place Autocomplete
+    // feature. People can enter geographical searches. The search box will return a
+    // pick list containing a mix of places and predicted search terms.
+
+    // This example requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+    function initAutocomplete() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+          lat: 7.119082288502541,
+          lng: -73.120029012106
+        },
+        zoom: 9,
+        mapTypeId: 'roadmap'
+      });
+
+
+      let kmlAreaData = `-73.077796936035,7.18019914627087 
+-73.0765991210938,7.17500114440924 
+-73.0805969238281,7.16109991073608 
+-73.081199645996,7.14789915084839 
+-73.0748977661132,7.13860082626343 
+-73.0655975341797,7.13280010223394 
+-73.0626983642578,7.12929916381836 
+-73.0673980712889,7.1263999938966 
+-73.0759963989258,7.10970115661621 
+-73.084098815918,7.10449981689459 
+-73.0943984985352,7.09769916534424 
+-73.1088027954102,7.08269977569586 
+-73.1156997680664,7.07289981842052 
+-73.1231994628906,7.07060003280645 
+-73.1300964355469,7.05680179595953 
+-73.1393966674804,7.05340003967291 
+-73.1473999023437,7.05050086975098 
+-73.152099609375,7.05919981002808 
+-73.1601028442383,7.06330013275158 
+-73.1688003540039,7.06389999389648 
+-73.1802978515624,7.06629991531383 
+-73.1843032836913,7.07320117950451 
+-73.1860961914062,7.08760023117071 
+-73.1884002685546,7.1096010208131 
+-73.1815032958984,7.12750101089489 
+-73.1780014038085,7.15230083465588 
+-73.1781005859374,7.17660093307501 
+-73.1763000488281,7.18930006027233 
+-73.1770782470703,7.19456291198725 
+-73.1682968139647,7.19389915466314 
+-73.1636962890624,7.1995987892152 
+-73.1591033935547,7.20250082016003 
+-73.1452026367187,7.211100101471 
+-73.1360015869141,7.21739912033081 
+-73.1261978149414,7.22079992294312 
+-73.1199035644531,7.22370100021362 
+-73.1118011474609,7.2241997718811 
+-73.1078033447265,7.22540187835699 
+-73.1054992675781,7.22540187835699 
+-73.1054992675781,7.22129917144787 
+-73.1048965454102,7.21269989013683 
+-73.1048965454102,7.20340108871466 
+-73.1031036376953,7.19760084152222 
+-73.0973968505859,7.1911988258363 
+-73.0915985107421,7.18540000915522 
+-73.0864028930664,7.18370008468634 
+-73.077796936035,7.18019914627087`;
+
+var coordinates = buildCoordinatesArrayFromString(kmlAreaData);
+
+/**
+ *  Builds an array with following structure:
+    [
+        { lng: -73.077796936035,  lat: 7.18019914627087 },
+        { lng: -73.0805969238281, lat: 7.16109991073608 },
+        ....
+    ]
+*/
+console.log(finalData);
+
+
+      /**
+ * Creates an array of coordinates from the content of the MultiGeometryCoordinates node of the GADM database.
+ */
+ 
+function buildCoordinatesArrayFromString(MultiGeometryCoordinates){
+  var finalData = [];
+    var grouped = MultiGeometryCoordinates.split("\n");
+
+    grouped.forEach(function(item, i){
+        let a = item.trim().split(',');
+
+        finalData.push({
+            lng: parseFloat(a[0]),
+            lat: parseFloat(a[1])
+        });
+    });
+
+    return finalData;
+}
+
+var BucaramangaDelimiters = buildCoordinatesArrayFromString(kmlAreaData);
+
+// Construct the polygon.
+var BucaramangaPolygon = new google.maps.Polygon({
+    paths: BucaramangaDelimiters,
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 3,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35
+});
+
+// Draw the polygon on the desired map instance
+BucaramangaPolygon.setMap(map);
+/**
+ *  Builds an array with following structure:
+    [
+        { lng: -73.077796936035,  lat: 7.18019914627087 },
+        { lng: -73.0805969238281, lat: 7.16109991073608 },
+        ....
+    ]
+*/
+// console.log(finalData);
+// console.log(coordinates);
+
+
+      // var ctaLayer = new google.maps.KmlLayer({
+      //   url: 'http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml',
+      //   map: map
+      // })
+
+
+      var ctaLayer = new google.maps.KmlLayer({
+        url: 'dhaka.kml',
+        map: map
+      })
+
+      var ctaLayer = new google.maps.KmlLayer({
+        url: 'bpmap/gadm36_BGD_4.kml',
+        map: map
+      })
+
+      // Create the search box and link it to the UI element.
+      var input = document.getElementById('pac-input');
+      var searchBox = new google.maps.places.SearchBox(input);
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+      // Bias the SearchBox results towards current map's viewport.
+      map.addListener('bounds_changed', function () {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      var markers = [];
+      // Listen for the event fired when the user selects a prediction and retrieve
+      // more details for that place.
+      searchBox.addListener('places_changed', function () {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+
+        // Clear out the old markers.
+        markers.forEach(function (marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function (place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+          var icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+
+          // Create a marker for each place.
+          markers.push(new google.maps.Marker({
+            map: map,
+            icon: icon,
+            title: place.name,
+            position: place.geometry.location
+          }));
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+        map.fitBounds(bounds);
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKaduL2DMoEj3FgqfsctosuK5h5WkKcAM&libraries=places&callback=initAutocomplete"
+    async defer></script>
+
+  <!-- </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKaduL2DMoEj3FgqfsctosuK5h5WkKcAM&callback=initMap">
+    </script> -->
+
+</body>
+
+</html>

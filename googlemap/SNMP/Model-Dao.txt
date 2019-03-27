@@ -1,0 +1,152 @@
+
+
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  client_id uuid,
+  client_code character varying,
+  client_name character varying,
+  company_id uuid,
+  company_code character varying,
+  company_name character varying,
+  device_code character varying,
+  device_name character varying,
+  device_ip character varying,
+  device_mac character varying,
+  device_type character varying DEFAULT 'Router'::character varying,
+  device_model character varying DEFAULT 'Cisco 3410'::character varying,
+  snmp_version character varying DEFAULT '3'::character varying,
+  snmp_udp_port integer DEFAULT 161,
+  snmp_community_string character varying,
+  snmp_security_level character varying DEFAULT 'noAuthNoPriv'::character varying,
+  snmp_auth character varying DEFAULT 'SHA'::character varying,
+  snmp_encryption character varying DEFAULT 'DES'::character varying,
+  snmp_username character varying,
+  snmp_group character varying,
+  snmp_password character varying,
+  snmp_connect_style character varying DEFAULT 'Community'::character varying,
+  latitude double precision DEFAULT 0,
+  longitude double precision DEFAULT 0,
+  loc_id uuid,
+  loc_code character varying,
+  loc_name character varying,
+  loc_type character varying,
+  upstream_device_id uuid,
+  upstream_device_code character varying,
+  upstream_device_ip character varying,
+  upstream_device_type character varying DEFAULT 'Router'::character varying,
+  upstream_link_mbps double precision DEFAULT 0,
+  upstream_link_type character varying DEFAULT 'Fiber'::character varying,
+  upstream_link_provider character varying DEFAULT 'ADN'::character varying,
+
+
+
+
+
+@Column(name = "id")
+private UUID id;
+
+@Column(name = "client_id")
+private UUID client_id;
+
+@Column(name = "client_code")
+private String client_code;
+
+@Column(name = "client_name")
+private String client_name;
+
+@Column(name = "company_id")
+private UUID company_id;
+
+@Column(name = "company_code")
+private String company_code;
+
+@Column(name = "company_name")
+private String company_name;
+
+@Column(name = "device_code")
+private String device_code;
+
+@Column(name = "device_name")
+private String device_name;
+
+@Column(name = "device_ip")
+private String device_ip;
+
+@Column(name = "device_mac")
+private String device_mac;
+
+@Column(name = "device_type")
+private String device_type;
+
+@Column(name = "device_model")
+private String device_model;
+
+@Column(name = "snmp_version")
+private String snmp_version;
+
+@Column(name = "snmp_udp_port")
+private int snmp_udp_port;
+
+@Column(name = "snmp_community_string")
+private String snmp_community_string;
+
+@Column(name = "snmp_security_level")
+private String snmp_security_level;
+
+@Column(name = "snmp_auth")
+private String snmp_auth;
+
+@Column(name = "snmp_encryption")
+private String snmp_encryption;
+
+@Column(name = "snmp_username")
+private String snmp_username;
+
+@Column(name = "snmp_group")
+private String snmp_group;
+
+@Column(name = "snmp_password")
+private String snmp_password;
+
+@Column(name = "snmp_connect_style")
+private String snmp_connect_style;
+
+@Column(name = "latitude")
+private double latitude;
+
+@Column(name = "longitude")
+private double longitude;
+
+@Column(name = "loc_id")
+private UUID loc_id;
+
+@Column(name = "loc_code")
+private String loc_code;
+
+@Column(name = "loc_name")
+private String loc_name;
+
+@Column(name = "loc_type")
+private String loc_type;
+
+@Column(name = "upstream_device_id")
+private UUID upstream_device_id;
+
+@Column(name = "upstream_device_code")
+private String upstream_device_code;
+
+@Column(name = "upstream_device_ip")
+private String upstream_device_ip;
+
+@Column(name = "upstream_device_type")
+private String upstream_device_type;
+
+@Column(name = "upstream_link_mbps")
+private double upstream_link_mbps;
+
+@Column(name = "upstream_link_type")
+private String upstream_link_type;
+
+@Column(name = "upstream_link_provider")
+private String upstream_link_provider;
+
+

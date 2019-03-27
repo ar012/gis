@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Site Info</title>
+
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous">
+  <!-- <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    /* #map {
+      height: 100%;
+    } */
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      /* height: 100%; */
+      margin: 0;
+      padding: 0;
+    }
+  </style> -->
+</head>
+
+<body>
+
+  <div id="googleMap" style="width:100%;height:500px;"></div>
+
+  <script>
+    // Map center
+    var btscenter = {
+        lat: 25.416425, 
+        lng: 89.776967
+    };
+        // antennaCoordinates
+        var cell1, cell2, cell3;
+        cell1 = {
+          lat: 25.419526,
+          lng: 89.789321
+        };
+      
+        cell2 = {
+          lat: 25.407122,
+          lng: 89.771819
+        };
+     
+        cell3 = {
+          lat: 25.422317,
+          lng: 89.767701
+        };
+        
+        function initMap() {
+          var map = new google.maps.Map(document.getElementById('googleMap'), {
+            zoom: 12,
+            center: btscenter
+          });
+
+          var antenna1 = [
+            btscenter,
+            cell1
+          ];
+          var antenna1Direction = new google.maps.Polyline({
+            path: antenna1,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+          });
+          antenna1Direction.setMap(map);
+
+
+          var antenna2 = [
+            btscenter,
+            cell2
+          ];
+          var antenna2Direction = new google.maps.Polyline({
+            path: antenna2,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+          });
+          antenna2Direction.setMap(map);
+
+          var antenna3 = [
+            btscenter,
+            cell3
+          ];
+          var antenna3Direction = new google.maps.Polyline({
+            path: antenna3,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+          });
+          antenna3Direction.setMap(map);
+
+
+
+          var marker = new google.maps.Marker({
+            position: btscenter,
+            map: map,
+            title: 'Badda'
+          });
+          marker.addListener('click', function () {
+            infowindow2.open(map, marker);
+          });
+
+
+        }
+  </script>
+
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKaduL2DMoEj3FgqfsctosuK5h5WkKcAM&callback=initMap">
+  </script>
+
+
+
+</body>
+
+</html>

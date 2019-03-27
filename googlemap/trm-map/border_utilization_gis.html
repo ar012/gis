@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>
+    <Link>
+    </Link>
+  </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous">
+
+  <style>
+    .site-img {
+      width: 550px;
+      height: 250px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- <div id="siteLinkMap" style="width:100%;height:60vh;"></div> -->
+  <div id="siteLinkMap" style="width:100%;height:500px;"></div>
+
+
+  <script>
+    // siteInfo
+    var links = [];
+    // var sites = [];
+
+    var siteInfo = [{
+        "name": "site_1",
+        "lat": 23.09114127,
+        "lng": 90.88917815
+      },
+      {
+        "name": "site_2",
+        "lat": 22.94558288,
+        "lng": 91.12030879
+      }
+    ];
+
+
+    function initMap() {
+      // Map center
+      var mapCenter = {
+        lat: siteInfo[0].lat,
+        lng: siteInfo[0].lng
+      };
+
+      var map = new google.maps.Map(document.getElementById('siteLinkMap'), {
+        zoom: 10,
+        center: mapCenter
+      });
+
+      // Sites Information
+      var contentSite_1 = '<div class="container">' +
+        '<p> <b>Robi Axiata Ltd.</b> <br> Link: Site1-Site2 <br> Tx/Rx: 12765/13031 <br> BW: 28 MHz <br> Ch.Sep: 266 MHz <br> Band: 13 GHz <br>' +
+        'Date ass.: 12/07/12 <br> Exp Dt: 11/04/14 <br> Basis: Nation-wide <br> Requested by: ----- <br> Approved by: -----</p></div>';
+
+      var contentSite_2 = '<div class="container">' +
+        '<p> <b>Robi Axiata Ltd.</b> <br> Link: Site1-Site2 <br> Tx/Rx: 12765/13031 <br> BW: 28 MHz <br> Ch.Sep: 266 MHz <br> Band: 13 GHz <br>' +
+        'Date ass.: 12/07/12 <br> Exp Dt: 11/04/14 <br> Basis: Nation-wide <br> Requested by: ----- <br> Approved by: -----</p></div>';
+
+
+
+      var site_1, site_2;
+      var sites = [
+        site_1 = {
+          lat: siteInfo[0].lat,
+          lng: siteInfo[0].lng
+        },
+        site_2 = {
+          lat: siteInfo[1].lat,
+          lng: siteInfo[1].lng
+        }
+      ];
+
+
+      var marker_1 = new google.maps.Marker({
+        position: sites[0],
+        map: map,
+        title: 'site_1'
+      });
+      var marker_2 = new google.maps.Marker({
+        position: sites[1],
+        map: map,
+        title: 'site_2'
+      });
+
+
+      // site info
+      var infowindow_1 = new google.maps.InfoWindow({
+        content: contentSite_1
+      });
+      marker_1.addListener('click', function () {
+        infowindow_1.open(map, marker_1);
+      });
+
+
+      var infowindow_2 = new google.maps.InfoWindow({
+        content: contentSite_2
+      });
+      marker_2.addListener('click', function () {
+        infowindow_2.open(map, marker_2);
+      });
+
+
+      for (i = 0; i < sites.length; i++) {
+        var links = new google.maps.Polyline({
+          // path: [sites[i], sites[i + 1]],
+          path: sites,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2,
+          map: map
+        });
+      }
+
+
+      google.maps.event.addListener(links, 'click', function () {
+
+        var coordInfoWindow = new google.maps.InfoWindow({
+          maxWidth: 800
+        });
+
+        var content = '<div class="display-flex infoDiv">' +
+          '<div class="col-md-12 text-center">' +
+          '<h4> Site Links Summary</h4>' +
+          '<p>Name: Hanubaish-Noakhali. Location: ---. Site Owner:---.</p>' +
+          '<div>' +
+          '<div >' +
+          '<img src="../map-img/MW_Link.png" alt="Site Links Image" class="site-img">' +
+          '</div>' +
+          '</div>';
+
+
+        coordInfoWindow.setContent(content);
+        coordInfoWindow.setPosition(new google.maps.LatLng((siteInfo[0].lat + siteInfo[1].lat) / 2, (siteInfo[0].lng +
+          siteInfo[1].lng) / 2));
+        coordInfoWindow.open(map);
+      });
+
+    }
+  </script>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKaduL2DMoEj3FgqfsctosuK5h5WkKcAM&callback=initMap">
+  </script>
+
+
+</body>
+
+</html>

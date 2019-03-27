@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Circles</title>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+      height: 100%;
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+
+
+
+
+  <script>
+    // First, create an object containing LatLng and radius for each btsTower.
+
+    var btsName = {
+      baliuraBazarSunamganj: {
+        center: {
+          lat: 25.0844166666667,
+          lng: 91.6218055555555
+        },
+        radius: 8000
+      }
+    };
+
+    // BTS Name
+    var baliuraBazarSunamganj = {
+      lat: 25.0844166666667,
+      lng: 91.6218055555555
+    };
+
+    var azimuth = [90, 210, 330];
+    var d = [0.05, 0.05, 0.05];
+
+    var cells = [
+      cell1 = {
+        lat: baliuraBazarSunamganj.lat + d[0] * (Math.cos(azimuth[0] * Math.PI / 180)),
+        lng: baliuraBazarSunamganj.lng + d[0] * (Math.sin(azimuth[0] * Math.PI / 180))
+      },
+
+      cell2 = {
+        lat: baliuraBazarSunamganj.lat + d[1] * (Math.cos(azimuth[1] * Math.PI / 180)),
+        lng: baliuraBazarSunamganj.lng + d[1] * (Math.sin(azimuth[1] * Math.PI / 180))
+      },
+      cell3 = {
+        lat: baliuraBazarSunamganj.lat + d[2] * (Math.cos(azimuth[2] * Math.PI / 180)),
+        lng: baliuraBazarSunamganj.lng + d[2] * (Math.sin(azimuth[2] * Math.PI / 180))
+      }
+    ];
+
+
+    function initMap() {
+      // Create the map.
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: baliuraBazarSunamganj,
+        mapTypeId: 'terrain'
+      });
+
+
+      // Construct the circle for each value in btsName.
+      // Note: We scale the area of the circle based on the radius.
+      for (var btsTower in btsName) {
+        // Add the circle for this btsTower to the map.
+        var btsCircle = new google.maps.Circle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 1,
+          fillColor: '#FF0000',
+          fillOpacity: 0.15,
+          map: map,
+          center: btsName[btsTower].center,
+          radius: (btsName[btsTower].radius)
+        });
+
+
+        // var marker = new google.maps.Marker({
+        //   position: btsName[btsTower].center,
+        //   map: map,
+        //   title: 'Border BTS on Map!'
+        // });
+      }
+
+
+      // Map center
+      var btscenter = {
+        lat: 25.0844166666667,
+        lng: 91.6218055555555
+      };
+
+      var btsinfo = '<div class="container">' +
+        '<h4> Border BTS Summary</h4>' +
+        '<p>Site ID: ---- <br> Antenna tl 1 <br> Distance tr. Border = 4 km <br> TA = 10 -> 5.50 km <br> Site Owner: GP <br> Approval No.: ---</p>' +
+        '</div>';
+
+      var infowindow = new google.maps.InfoWindow({
+        content: btsinfo
+      });
+      var marker1 = new google.maps.Marker({
+        position: btscenter,
+        title: "Border BTS on Map"
+      });
+      // To add the marker to the map, call setMap();
+      // marker.setMap(map);
+      marker1.setMap(map);
+
+      marker1.addListener('click', function () {
+        infowindow.open(map, marker1);
+      });
+
+
+
+      for (var i = 0; i < cells.length; i++) {
+        var antenna_i = [btscenter, cells[i]];
+
+        var antennaDirection_i = new google.maps.Polyline({
+          path: antenna_i,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+        antennaDirection_i.setMap(map);
+      };
+
+
+      // var antenna1Direction = new google.maps.Polyline({
+      //   path: antenna1,
+      //   geodesic: true,
+      //   strokeColor: '#FF0000',
+      //   strokeOpacity: 1.0,
+      //   strokeWeight: 2
+      // });
+      // antenna1Direction.setMap(map);
+
+
+      // var antenna2Direction = new google.maps.Polyline({
+      //   path: antenna2,
+      //   geodesic: true,
+      //   strokeColor: '#FF0000',
+      //   strokeOpacity: 1.0,
+      //   strokeWeight: 2
+      // });
+      // antenna2Direction.setMap(map);
+
+      // var antenna3Direction = new google.maps.Polyline({
+      //   path: antenna3,
+      //   geodesic: true,
+      //   strokeColor: '#FF0000',
+      //   strokeOpacity: 1.0,
+      //   strokeWeight: 2
+      // });
+      // antenna3Direction.setMap(map);
+
+
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKaduL2DMoEj3FgqfsctosuK5h5WkKcAM&callback=initMap">
+  </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+var btsinfo = '<div class="display-flex infoDiv">' +
+  '<div class="col-md-7 imgDiv">' +
+    '<img src="assets/images/mapAPI/border_bts.jpeg" alt="Border BTS" class="bts-image">' +
+  '</div>' +
+  '<div class="col-md-5">' +
+    '<h4> Border BTS Summary</h4>'+
+    '<p>BTS Name: Baliura Bazar, Sunamganj <br>'+
+    'Location: Dowara Bazar, Sunamganj <br>'+
+    'Place/Sector: Baliura Bazar_1, Baliura Bazar_2, Baliura Bazar_3 <br>'+
+    'Shortest distance from border = 4.70 Km <br>' +
+    'Antenna No.: 1, 2, 3 <br>'+
+    'Azimuth (deg): 90, 210, 330 <br>' +
+    'Tx Power (dBm): 45, 45, 45 <br>'+
+    'Tilt (deg): 2, 2, 2 <br>' +
+    'Antenna Height (m): 41, 41, 35 <br>' +
+    'Max. TA Value: -1, -1, 7 <br>'+
+    'Antenna Distance from Border (Km): -1, -1 4.7' +
+    'Site Owner: Robi  <br> Approval No.: ---</p>' +
+'</div>' +
+'</div>';

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Lat Lng</title>
+    </head>
+
+<body>
+
+    <h1> Lat Lng on Google Map</h1>
+
+
+    <div id="googleMap" style="width:1000px;height:500px;"></div>
+
+    <script>
+        function myMap() {
+            var mapProp = {
+                center: new google.maps.LatLng(23.773123, 90.411283),
+                zoom: 5,
+            };
+            var mapCanvas = document.getElementById("googleMap");
+            var map = new google.maps.Map(mapCanvas, mapProp);
+
+            var myCenter = {
+                lat: 23.773123,
+                lng: 90.411283
+            };
+            var marker = new google.maps.Marker({
+                position: myCenter
+                // animation:google.maps.Animation.BOUNCE
+
+            });
+
+
+
+            // Animate the Marker
+            // ==================
+            // var marker = new google.maps.Marker({
+            //   position:myCenter,
+            //   animation:google.maps.Animation.BOUNCE
+            // animation:google.maps.Animation.DROP
+            // });
+
+            marker.setMap(map);
+
+
+            // Zoom to  when clicking on marker
+            // ================================
+            google.maps.event.addListener(marker, 'click', function () {
+                var pos = map.getZoom();
+                map.setZoom(10);
+                map.setCenter(marker.getPosition());
+                // window.setTimeout(function () {
+                //     map.setZoom(pos);
+                // }, 5000);
+            });
+
+
+            // Google Maps - InfoWindow
+            // ========================
+
+            var mapInfo = "CTrends Software and Services Ltd."
+
+
+            var infowindow = new google.maps.InfoWindow({
+                content: mapInfo
+            });
+
+            // infowindow.open(map, marker);
+
+
+            // Open an InfoWindow When Clicking on The Marker
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+
+
+
+
+            // Set Markers and Open InfoWindow for Each Marker
+            google.maps.event.addListener(map, 'click', function (event) {
+                placeMarker(map, event.latLng);
+            });
+
+            function placeMarker(map, location) {
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+                var infowindow = new google.maps.InfoWindow({
+                    content: 'Latitude: ' + location.lat() +
+                        '<br>Longitude: ' + location.lng()
+                });
+                infowindow.open(map, marker);
+            }
+
+
+
+        }
+    </script>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4nCeNv-LrmMZ-euEK27_OnZ7-dyYuhN8&callback=myMap"></script>
+
+
+
+</body>
+
+</html>

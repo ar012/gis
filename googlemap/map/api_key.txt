@@ -1,0 +1,14 @@
+Get API Key
+===========
+https://developers.google.com/maps/documentation/javascript/get-api-key
+
+AIzaSyDUwC-n36ryAWHllkpJfwJ1XRSgiF1x8uI
+
+
+Get Latitude and Longitude:
+==========================
+https://www.latlong.net/
+
+
+TestProject: api_key: AIzaSyCTC3D5OkJc_xkAOrCyyXo1un99g_UBddA
+

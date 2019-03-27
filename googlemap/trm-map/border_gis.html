@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Site Links></title>
+</head>
+
+<body>
+
+
+
+  <div class="card card-2 row" id="googleMap" style="height: 600px; margin-top: 0px !important">
+    <!-- <span id="mapApi">MAP API</span> -->
+  </div>
+
+
+
+  <style>
+    .boq {
+      margin-left: 15px;
+      background-color: transparent;
+      border: none;
+      color: blue;
+      outline: none;
+    }
+
+    .boq:hover {
+      color: darkblue;
+    }
+
+    .boqTable {
+      width: 100%;
+      top: 125px;
+      position: absolute;
+      border-collapse: collapse;
+    }
+
+    .boqTable td {
+      height: 20px;
+    }
+  </style>
+
+  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=${map.client.gmapApiKey}&libraries=geometry&callback=showMap"></script>
+<script> -->
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKaduL2DMoEj3FgqfsctosuK5h5WkKcAM&callback=initMap">
+  </script>
+
+
+  var lines = [];
+  var poles = [];
+  var poleInfo = [{
+  "id": "G001",
+  "type": "Power-Grid",
+  "name": "Power Grid 1 ( 33 KV )",
+  "lat": 23.158191,
+  "lng": 90.156713,
+  "connectto": "none",
+  "model": "none"
+  }, {
+  "id": "PL00",
+  "type": "Transmision Pole-Large",
+  "name": "Secondary Transmision Pole 1",
+  "lat": 23.160223,
+  "lng": 90.153172,
+  "connectto": "G001",
+  "model": "u273f207b-e639-41f9-9b5d-27f2d3b3abe8"
+  } ]
+
+
+
+
+
+  function showMap() {
+
+  // ------------------------------create map object---------------------------------------
+  var mapProp = {
+  center: new google.maps.LatLng(poleInfo[8].lat, poleInfo[8].lng),
+  zoom: 16,
+  };
+
+
+  var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+
+
+
+
+
+  var coordinates;
+
+  if (poleInfo[i].connectto == "none") {
+  coordinates = [{
+  lat: poleInfo[i].lat,
+  lng: poleInfo[i].lng
+  }, {
+  lat: poleInfo[i].lat,
+  lng: poleInfo[i].lng
+  }];
+
+  } else {
+  coordinates = [{
+  lat: connectTo[0].lat,
+  lng: connectTo[0].lng
+  }, {
+  lat: poleInfo[i].lat,
+  lng: poleInfo[i].lng
+  }];
+  }
+
+
+
+
+  // -------------search/filter for given input by user & populate a new array-------------
+  var x;
+
+  function connectable_coordinates2(event) {
+  return event.id == x;
+  }
+
+  
+  lines[i] = new google.maps.Polyline({
+  path: coordinates,
+  strokeColor: polylineColor,
+  map: map
+  });
+
+
+
+  // -------------search/filter for given input by user & populate a new array-------------
+	                    function connectable_coordinates(event) { 
+	                        return event.id == poleInfo[i].connectto;
+	                    }
+	                    var connectTo = poleInfo.filter(connectable_coordinates);
+	                    //alert(JSON.stringify(connectTo[0].lat + " " + connectTo[0].lng));
+
+  lines[i].index = i;
+  google.maps.event.addListener(lines[i], 'click', function () { //alert(poleInfo[this.index].connectto);
+
+
+  x = poleInfo[this.index].connectto;
+  var connectTo = poleInfo.filter(connectable_coordinates2);
+
+  coordInfoWindow = new google.maps.InfoWindow({
+  maxWidth: 800
+  });
+  var content;
+
+
+  content = "<div class='info'>" +
+    "<b>Cable Type :</b> MultiConductor" + "</b><button class='boq'>BOQ</button>" +
+    "<br />" + "<b>Cable Size :</b> 14/3" +
+    "<br />" + "<b>Voltage Rating :</b> 400KV" +
+    "<br />" + "<b>No of Circuits :</b> Four Circuits" +
+    "<br />" + "<b>Conductor Name :</b> Twin Finch" +
+    "<br />" + "<b>Installation Date :</b> 14/12/17 " +
+    "</div>" +
+  "<br />" + '<div class="frame">
+    <p></p>
+  </div>';
+
+  coordInfoWindow.setContent(content);
+  coordInfoWindow.setPosition(new google.maps.LatLng((connectTo[0].lat + poleInfo[this.index].lat) / 2), (
+  connectTo[0].lng + poleInfo[this.index].lng) / 2)); coordInfoWindow.open(map);
+
+  });
+
+
+  }
+  }
+  </script>
+
+
+
+
+</body>
+
+</html>

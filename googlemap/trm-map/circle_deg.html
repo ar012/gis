@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Circles</title>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+      height: 100%;
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map-canvas"></div>
+  
+  <script>
+    function initializeMap(){
+
+var mapOptions = {
+center: new google.maps.LatLng(36.033036, -93.8655744),
+zoom: 4,
+mapTypeId: google.maps.MapTypeId.ROADMAP
+};   
+
+var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+var R = 6378137;
+var dis = parseInt(document.form['input']['val'].value);
+var bearing = 80; 
+var lat2 = Math.asin(   Math.sin(37.470625)*Math.cos(dis/R)+Math.cos(37.470625)*Math.sin(dis/R)*Math.cos(bearing) );
+var lon2 = -122.266823 + Math.atan2(Math.sin(bearing)*Math.sin(dis/R)*Math.cos(37.470625),Math.cos(dis/R)-Math.sin(37.470625)*Math.sin(-122.266823));
+
+
+var impactP = new google.maps.Polyline({
+  path: new google.maps.LatLng(lat2,lon2), 
+              strokeColor: "#FF0000",
+  strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+impactP.setMap(map);
+}
+  </script>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKaduL2DMoEj3FgqfsctosuK5h5WkKcAM&callback=initMap">
+  </script>
+</body>
+
+</html>

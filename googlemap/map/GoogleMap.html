@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CTrends Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <script>
+        var map;
+
+        function initMap() {
+            var ctsLatLng = {lat: 23.773123, lng: 90.411283};
+
+            // var ctsLatLng = {lat: 40.797, lng: -73.9644};
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: ctsLatLng,
+                zoom: 10,
+
+                // styles: [{
+                //     "featureType": "water",
+                //     "stylers": [{
+                //         "color": "#ffeb3b"
+                //     }]
+                // }]
+            });
+
+            // Google Map Traffic Layer
+            // ========================
+            // var trafficLayer = new google.maps.TrafficLayer();
+            // trafficLayer.setMap(map);
+
+
+            var markerTitle = "CTrends Software & Services Ltd."
+
+            var marker = new google.maps.Marker({
+                position: ctsLatLng,
+                map: map,
+                title: markerTitle,
+                // icon: 'pin.png',
+                animation: google.maps.Animation.BOUNCE,
+                draggable: true
+            });
+        }
+    </script>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkR3vs_lU4R1WQCAOyQR5M-do2haDimQo&callback=initMap"
+        async defer></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <button id="traffic-b">Traffic</button>
+    <button id="transit-b">Transit</button>
+    <button id="bike-b">Bike</button>
+</body>
+
+</html>

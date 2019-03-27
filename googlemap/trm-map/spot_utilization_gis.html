@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Site Info</title>
+
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous">
+  <!-- <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    /* #map {
+      height: 100%;
+    } */
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      /* height: 100%; */
+      margin: 0;
+      padding: 0;
+    }
+  </style> -->
+</head>
+
+<body>
+
+
+
+
+
+  <div id="googleMap" style="width:100%;height:500px;"></div>
+
+  <script>
+    function initMap() {
+      // Map center
+      var badda = {
+        lat: 23.793105,
+        lng: 90.441043
+      };
+      var map = new google.maps.Map(document.getElementById('googleMap'), {
+        zoom: 12,
+        center: badda
+      });
+
+      // siteCoordinates
+      var baridhara, badda, mohakhali, motijheel;
+      baridhara = {
+        lat: 23.810331,
+        lng: 90.412521
+      };
+
+      badda = {
+        lat: 23.793105,
+        lng: 90.441043
+      };
+      mohakhali = {
+        lat: 23.780760,
+        lng: 90.416207
+      };
+      motijheel = {
+        lat: 23.728282,
+        lng: 90.413805
+      };
+
+      var siteLinks = [
+        baridhara,
+        badda,
+        mohakhali,
+        motijheel
+      ];
+      var sitePath = new google.maps.Polyline({
+        path: siteLinks,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+
+      sitePath.setMap(map);
+
+
+      // Site Information
+      var site1Info = '<div class="container">' +
+        '<p> <b>Robi Axiata Ltd.</b> <br> Link: Site1-Site2 <br> Tx/Rx: 12765/13031 <br> BW: 28 MHz <br> Ch.Sep: 266 MHz <br> Band: 13 GHz <br> Date ass.: 12/07/12 <br> Exp Dt: 11/04/14 <br> Basis: Nation-wide <br> Requested by: ----- <br> Approved by: -----</p>' +
+       
+        '</div>';
+
+      var infowindow1 = new google.maps.InfoWindow({
+        content: site1Info
+      });
+
+      var site2Info = '<div class="container">' +
+        '<div class="row">' +
+        '<div class="col-sm-12">' +
+        '<p> Robi Axiata Ltd. <br> Link: Site1-Site2 and Site2-Site3 <br> Tx/Rx: 12765/13031 <br> </p>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+
+      var infowindow2 = new google.maps.InfoWindow({
+        content: site2Info
+      });
+
+      var site3Info = '<div class="container">' +
+        '<div class="row">' +
+        '<div class="col-sm-12">' +
+        '<p> Robi Axiata Ltd. <br> Link: Site2-Site3 and Site3-Site4 <br> Tx/Rx: 12765/13031 <br> </p>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+
+      var infowindow3 = new google.maps.InfoWindow({
+        content: site3Info
+      });
+
+      var site4Info = '<div class="container">' +
+        '<div class="row">' +
+        '<div class="col-sm-12">' +
+        '<p> Robi Axiata Ltd. <br> Link: Site3-Site4 <br> Tx/Rx: 12765/13031 <br> </p>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+
+      var infowindow4 = new google.maps.InfoWindow({
+        content: site4Info
+      });
+
+
+
+      // Baridhara
+      var marker1 = new google.maps.Marker({
+        position: baridhara,
+        map: map,
+        title: 'Baridhara'
+      });
+      marker1.addListener('click', function () {
+        infowindow1.open(map, marker1);
+      });
+      // Badda
+      var marker2 = new google.maps.Marker({
+        position: badda,
+        map: map,
+        title: 'Badda'
+      });
+      marker2.addListener('click', function () {
+        infowindow2.open(map, marker2);
+      });
+
+      // Mohakhali
+      var marker3 = new google.maps.Marker({
+        position: mohakhali,
+        map: map,
+        title: 'Mohakhali'
+      });
+      marker3.addListener('click', function () {
+        infowindow3.open(map, marker3);
+      });
+
+      // Motijheel
+      var marker4 = new google.maps.Marker({
+        position: motijheel,
+        map: map,
+        title: 'Motijheel'
+      });
+      marker4.addListener('click', function () {
+        infowindow4.open(map, marker4);
+      });
+    }
+  </script>
+
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKaduL2DMoEj3FgqfsctosuK5h5WkKcAM&callback=initMap">
+  </script>
+
+
+
+</body>
+
+</html>

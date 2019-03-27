@@ -1,0 +1,84 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!DOCTYPE html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <style>
+    html,
+    body,
+    #maps {
+      height: 100%;
+      width: 100%;
+      margin: 0px;
+      padding: 0px
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+  
+  <script>
+
+
+    var infowindow = null;
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    function initialize() {
+      var centerMap = new google.maps.LatLng(52, 10);
+
+      var myOptions = {
+        zoom: 5,
+        center: centerMap,
+        scrollwheel: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+
+
+      var map = new google.maps.Map(document.getElementById("maps"), myOptions);
+
+      setMarkers(map, sites);
+
+      var bikeLayer = new google.maps.BicyclingLayer();
+      bikeLayer.setMap(map);
+    }
+
+    var sites = [
+      [" ", 52, 10, 10, "<div>This is the first site</div>"]
+    ];
+
+    function setMarkers(map, markers) {
+      for (var i = 0; i < markers.length; i++) {
+        var sites = markers[i];
+        
+        var siteLatLng = new google.maps.LatLng(sites[1], sites[2]);
+       
+        var marker = new google.maps.Marker({
+          position: siteLatLng,
+          map: map,
+          title: sites[0],
+          zIndex: sites[3],
+          html: sites[4]
+        });
+
+
+        var infowindow = new google.maps.InfoWindow({
+          content: sites[4]
+          // maxWidth: 60
+        });
+        infowindow.open(map, marker);
+
+        // google.maps.event.addListener(marker, "click", function() {
+        //   infowindow.setContent(this.html);
+        //   infowindow.open(map, this);
+        // });
+
+
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="maps"></div>
+</body>
+
+</html>

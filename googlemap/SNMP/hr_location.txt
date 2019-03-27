@@ -1,0 +1,146 @@
+-- Table: public.hr_locations
+
+-- DROP TABLE public.hr_locations;
+
+CREATE TABLE public.hr_locations
+(
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  location_code character varying,
+  location_name character varying,
+  city character varying,
+  doa_type_code character varying,
+  doa_type_name character varying,
+  doa_amount double precision DEFAULT 0,
+  doa_currency_code character varying,
+  doa_currency_name character varying,
+  created_by_code character varying,
+  created_by_name character varying,
+  created_by_username character varying,
+  created_by_email character varying,
+  created_by_company_code character varying,
+  created_by_company_name character varying,
+  created_at timestamp without time zone,
+  updated_by_code character varying,
+  updated_by_name character varying,
+  updated_by_username character varying,
+  updated_by_email character varying,
+  updated_by_company_code character varying,
+  updated_by_company_name character varying,
+  updated_at timestamp without time zone,
+  submitted_by_code character varying,
+  submitted_by_name character varying,
+  submitted_by_username character varying,
+  submitted_by_email character varying,
+  submitted_by_company_code character varying,
+  submitted_by_company_name character varying,
+  submitted_at timestamp without time zone,
+  approved_by_code character varying,
+  approved_by_name character varying,
+  approved_by_username character varying,
+  approved_by_email character varying,
+  approved_by_company_code character varying,
+  approved_by_company_name character varying,
+  approved_at timestamp without time zone,
+  locked_by_code character varying,
+  locked_by_name character varying,
+  locked_by_username character varying,
+  locked_by_email character varying,
+  locked_by_company_code character varying,
+  locked_by_company_name character varying,
+  locked_at timestamp without time zone,
+  is_locked boolean,
+  status character varying,
+  wf_status character varying,
+  client_code character varying,
+  client_name character varying,
+  is_border boolean,
+  latitude double precision,
+  longitude double precision,
+  address character varying,
+  altitude double precision,
+  country_code character varying,
+  country_id uuid,
+  country_name character varying,
+  data_digest character varying DEFAULT ''::character varying,
+  CONSTRAINT pk_hr_locations PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.hr_locations
+  OWNER TO postgres;
+
+
+
+@Column(name = "id")
+private UUID id;
+
+@Column(name = "location_code")
+private String locationCode;
+
+@Column(name = "location_name")
+private String locationName;
+
+@Column(name = "latitude")
+private String latitude;
+
+@Column(name = "longitude")
+private String longitude;
+
+@Column(name = "address")
+private String address;
+
+@Column(name = "altitude")
+private String altitude;
+
+@Column(name = "loc_type_code")
+private String locTypeCode;
+
+@Column(name = "loc_type_name")
+private String locTypeName;
+
+@Column(name = "incharge_id")
+private UUID inchargeId;
+
+@Column(name = "incharge_name")
+private String inchargeName;
+
+@Column(name = "incharge_desig")
+private String inchargeDesig;
+
+@Column(name = "incharge_mobile")
+private String inchargeMobile;
+
+@Column(name = "incharge_email")
+private String inchargeEmail;
+
+@Column(name = "state_code")
+private String stateCode;
+
+@Column(name = "state_name")
+private String stateName;
+
+@Column(name = "div_code")
+private String divCode;
+
+@Column(name = "div_name")
+private String divName;
+
+@Column(name = "district_code")
+private String districtCode;
+
+@Column(name = "district_name")
+private String districtName;
+
+@Column(name = "subdistrict_code")
+private String subdistrictCode;
+
+@Column(name = "subdistrict_name")
+private String subdistrictName;
+
+@Column(name = "union_code")
+private String unionCode;
+
+@Column(name = "union_name")
+private String unionName;
+
